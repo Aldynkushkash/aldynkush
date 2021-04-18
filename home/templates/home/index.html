@@ -1,0 +1,32 @@
+{% extends 'basic.html' %}
+
+{% load thumbnail %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}Кол арын{% endblock %}
+
+{% block content %}
+    <h1>Последние 10 записей</h1>
+    {% if aks %}
+        <ul class="list-unstyled">
+            {% for ak in aks %}
+                <li class="media my-5 p-3 border">
+                    {% url 'home:detail' rubric_pk=ak.rubric.pk pk=ak.pk as url %}
+                    <a href="{{ url }}{{ all }}">
+                        {% if ak.image %}
+                            <img class="mr-3" src="{% thumbnail ak.image 'default' %}" alt="">
+                        {% else %}
+                            <img class="mr-3" src="{% static 'home/empty.jpeg' %}" alt="">
+                        {% endif %}
+                    </a>
+                    <div class="media-body">
+                        <h2><a href="{{ url }}{{ all }}">{{ ak.title }}</a> </h2>
+                        <div>{{ ak.content }}</div>
+                        <p class="text-right font-italic">{{ ak.created }}</p>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

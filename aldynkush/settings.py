@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os.path
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home.apps.HomeConfig',
+    'bootstrap4',
+    'django_cleanup',
+    'easy_thumbnails',
+    'captcha',
 ]
 
 MIDDLEWARE = [
@@ -63,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'home.middlewares.ak_context_processor',
             ],
         },
     },
@@ -129,3 +135,21 @@ STATIC_ROOT = 'static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'home.AdvUser'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_URL = '/media/'
+
+THUMBNAIL_ALIASES = {
+    '': {
+	'defaults': {
+	    'size': (96, 96),
+	    'crop': 'scale',
+	},
+    },
+}
+
+THUMBNAIL_BASEDIR = 'thumbnails'
+

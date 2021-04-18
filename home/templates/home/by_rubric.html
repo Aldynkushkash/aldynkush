@@ -1,0 +1,41 @@
+{% extends 'basic.html' %}
+
+{% load thumbnail %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}{{ rubric }}{% endblock %}
+
+{% block content %}
+    <h1 class="mb-2">{{ rubric }}</h1>
+    <div class="container-fluid mb-2">
+        <div class="row">
+            <div class="col">&nbsp;</div>
+            <form class="col-md-auto form-inline">
+                {% bootstrap_form form show_label=False %}
+                {% bootstrap_button content='Искать' button_type='submit' %}
+            </form>
+        </div>
+    </div>
+    {% if aks %}
+    <ul class="list-unstyled">
+        {% for ak in aks %}
+        <li class="media my-5 p-3 border">
+            {% url 'home:detail' rubric_pk=rubric.pk pk=ak.pk as url %}
+            <a href="{{ url }}{{ all }}">
+                {% if ak.image %}
+                    <img class="mr-3" src="{% thumbnail ak.image 'default' %}" alt="">
+                {% else %}
+                    <img class="mr-3" src="{% static 'images/empty.jpeg' %}" alt="">
+                {% endif %}
+            </a>
+            <div class="media-body">
+                <h2><a href="{{ url }}{{ all }}">{{ ak.title }}</a></h2>
+                <p class="text-right font-italic">{{ ak.created }}</p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% bootstrap_pagination page url=keyword %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'basic.html' %}
+
+{% load bootstrap4 %}
+
+{% block title %}{{ ak.title }} - {{ ak.rubric.name }}{% endblock %}
+
+{% block content %}
+    <div class="container-fluid mt-3">
+        <div class="row">
+            {% if ak.image %}
+                <div class="col-md-auto"><img class="main-image" src="{{ ak.image.url }}" alt=""></div>
+            {% endif %}
+            <div class="col">
+                <h1>{{ ak.title }}</h1>
+                <p>{{ ak.content }}</p>
+                <p class="text-right font-italic">Добавлено {{ ak.created }}</p>
+            </div>
+        </div>
+    </div>
+    {% if ais %}
+        <div class="d-flex justify-content-between flex-wrap mt-5">
+            {% for ai in ais %}
+                <div>
+                    <img class="additional-image" src="{{ ai.image.url }}" alt="">
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <hr>
+    <p><a href="{% url 'home:by_rubric' pk=ak.rubric.pk %}{{ all }}">Назад</a></p>
+    <hr>
+    <h3 class="mt-5">Новый комментарий</h3>
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form layout='horizontal' %}
+        {% buttons submit='Добавить' %}{% endbuttons %}
+    </form>
+    {% if comments %}
+        <div class="mt-5">
+            {% for comment in comments %}
+                <div class="my-2 p-2 border">
+                    <h4>{{ comment.author }}</h4>
+                    <p>{{ comment.content }}</p>
+                    <p class="text-right font-italic">{{ comment.created }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

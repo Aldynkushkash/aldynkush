@@ -1,0 +1,46 @@
+{% extends 'basic.html' %}
+
+{% load thumbnail %}
+{% load static %}
+
+{% block title %}Профиль пользователя{% endblock %}
+
+{% block content %}
+    <h1>Профиль пользователя {{ user.username }}</h1>
+    <hr>
+    {% if user.first_name and user.last_name %}
+        <p>Здравствуйте, {{ user.first_name }} {{ user.last_name }}!</p>
+    {% else %}
+        <p>Здравствуйте!</p>
+    {% endif %}
+    <p><a href="{% url 'home:profile_ak_add' %}">Добавить запись</a></p>
+    <hr>
+    {% if aks %}
+        <h2>Ваши записи</h2>
+        <ul class="list-unstyled">
+            {% for ak in aks %}
+                <li class="media my-5 p-3 border">
+                {% url 'home:profile_ak_detail' pk=ak.pk as url %}
+                <a href="{{ url }}{{ all }}">
+                    {% if ak.image %}
+                        <img class="mr-3" src="{% thumbnail ak.image 'default' %}" alt="">
+                    {% else %}
+                        <img class="mr-3" src="{% static 'images/empty.jpeg' %}" alt="">
+                    {% endif %}
+                </a>
+                <div class="media-body">
+                    <h2><a href="{{ url }}{{ all }}">{{ ak.title }}</a></h2>
+                    <p>Рубрика: {{ ak.rubric }}</p>
+                    <div>{{ ak.content }}</div>
+{#                    <p class="text-right font-weight-bold">{{ ak.price }} руб.</p>#}
+                    <p class="text-right font-italic">{{ ak.created }}</p>
+                    <p class="text-right mt-2">
+                        <a href="{% url 'home:profile_ak_change' pk=ak.pk %}">Исправить</a>
+                        <a href="{% url 'home:profile_ak_delete' pk=ak.pk %}">Удалить</a>
+                    </p>
+                </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

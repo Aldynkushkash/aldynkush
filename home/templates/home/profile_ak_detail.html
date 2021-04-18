@@ -1,0 +1,31 @@
+{% extends "basic.html" %}
+
+{% block title %}{{ ak.title }} - Профиль пользователя{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-3">
+    <div class="row">
+        {% if ak.image %}
+            <div class="col-md-auto"><img src="{{ ak.image.url }}" class="main-image" alt=""></div>
+        {% endif %}
+        <div class="col">
+            <h1>{{ ak.title }}</h1>
+            <p>{{ ak.content }}</p>
+            {% comment %}<p class="font-weight-bold">{{ ak.price }}</p>
+            <p>{{ ak.contacts }}</p>{% endcomment %}
+            <p class="text-right font-italic">Добавлено {{ ak.created }}</p>
+        </div>
+    </div>
+</div>
+{% if ais %}
+    <div class="d-flex justify-content-between flex-wrap mt-5">
+        {% for ai in ais %}
+            <div>
+                <img class="additional-image" src="{{ ai.image.url }}" alt="">
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+<hr>
+<p><a href="{% url 'home:profile' %}">Назад</a> </p>
+{% endblock %}

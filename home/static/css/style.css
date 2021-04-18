@@ -1,0 +1,128 @@
+@font-face {
+    src: url('../fonts/ttbub___.TTF');
+    font-family: "Tuva Bold";
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    src: url('../fonts/ttbui___.TTF');
+    font-family: "Tuva Italic";
+    font-weight: normal;
+    font-style: italic;
+}
+@font-face {
+    src: url('../fonts/ttbun___.TTF');
+    font-family: "Tuva Normal";
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+}
+.header {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ff871c;
+    padding-top: 10px;
+
+}
+.brand {
+    justify-content: space-between;
+    align-items: center;
+    width: calc(100vw - 40px);
+}
+.logo {
+    width: 35px;
+    height: 35px;
+}
+.description, .nullplus {
+    color: white;
+    font-weight: bold;
+}
+.main-name {
+    font-family: "Tuva Bold", serif;
+
+    color: #fff;
+    font-size: 100px;
+    font-weight: 800;
+    text-shadow: 4px 4px 3px gold;
+}
+.header .nav-login {
+    align-self: flex-end;
+    margin-right: 20px;
+}
+.dropdown-menu {
+    background-color: orangered;
+}
+
+.nav a {
+    color: #ffffff;
+    font-weight: bold;
+}
+.nav a:hover {
+    background-color: orangered;
+}
+.menu {
+    justify-content: center;
+    align-items: center;
+    background-color: brown;
+    height: 50px;
+}
+.site-menu {
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    list-style: none;
+}
+.site-menu div {
+    margin: 0;
+    padding: 0 20px;
+    height: 100%;
+}
+.site-menu div:hover {
+    background-color: #ff871c;
+    height: 50px;
+}
+.site-menu a {
+    display: flex;
+    align-self: center;
+    color: white;
+    font-weight: bold;
+    margin: 0;
+}
+.site-menu a:hover {
+    color: white;
+    font-weight: bold;
+    margin: 0;
+    text-decoration: none;
+}
+.menu-item {
+    display: flex;
+    align-items: center;
+}
+.content {
+    min-height: 700px;
+    background-color: #f8f8f8;
+}
+img.main-image {
+    width: 300px;
+}
+img.additional-image {
+    width: 180px;
+}
+
+.sidebar {
+
+    background-color: orangered;
+}
+.sidebar > span {
+    color: blue;
+    align-self: center;
+}
+.footer {
+
+    background-color: #ff871c;
+}

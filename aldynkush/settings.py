@@ -11,11 +11,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os.path
+import braintree
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -27,7 +27,6 @@ SECRET_KEY = 'django-insecure-ymcj98y@01vej+o8d-_0=iods5_$4d35ysfcl)p%6%*elq1gkz
 DEBUG = True
 
 ALLOWED_HOSTS = ['aldynkushkash.ru', 'www.aldynkushkash.ru', '127.0.0.1']
-
 
 # Application definition
 
@@ -43,6 +42,10 @@ INSTALLED_APPS = [
     'django_cleanup',
     'easy_thumbnails',
     'captcha',
+    'shop.apps.ShopConfig',
+    'cart.apps.CartConfig',
+    'orders.apps.OrdersConfig',
+    # 'payment.apps.PaymentConfig',
 ]
 
 MIDDLEWARE = [
@@ -69,13 +72,13 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'home.middlewares.ak_context_processor',
+                'cart.context_processors.cart',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'aldynkush.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -89,7 +92,6 @@ DATABASES = {
         'HOST': 'localhost',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -109,11 +111,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'ru'
+LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'Asia/Krasnoyarsk'
 
@@ -123,13 +124,12 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -137,7 +137,6 @@ STATIC_ROOT = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'home.AdvUser'
-
 
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = '465'
@@ -148,19 +147,31 @@ EMAIL_HOST_PASSWORD = '10011979AKya'
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
 
 THUMBNAIL_ALIASES = {
     '': {
-	'defaults': {
-	    'size': (96, 96),
-	    'crop': 'scale',
-	},
+        'defaults': {
+            'size': (96, 96),
+            'crop': 'scale',
+        },
     },
 }
 
 THUMBNAIL_BASEDIR = 'thumbnails'
 
+CART_SESSION_ID = 'cart'
+
+# Braintree settings
+BRAINTREE_MERCHANT_ID = 'j88ydr84fsptwczp'  # Merchant ID
+BRAINTREE_PUBLIC_KEY = '7zwk5w2yzt49mb7x'  # Public Key
+BRAINTREE_PRIVATE_KEY = 'cdaf62bbddd902861096340df243e7a0'  # Private Key
+
+BRAINTREE_CONF = braintree.Configuration(
+    braintree.Environment.Sandbox,
+    BRAINTREE_MERCHANT_ID,
+    BRAINTREE_PUBLIC_KEY,
+    BRAINTREE_PRIVATE_KEY
+)

@@ -17,6 +17,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'css/shop.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     {% bootstrap_javascript jquery='slim' %}
@@ -59,6 +60,7 @@
             <ul class="row site-menu list-unstyled">
                 <li><a class="root" href="{% url 'home:index' %}"><div class="menu-item">Кол арын</div></a></li>
                 <li><a class="root" href="{% url 'home:about' page='about' %}"><div class="menu-item">Редакция</div></a></li>
+                <li><a class="root" href="{% url 'shop:product_list' %}"><div class="menu-item">Магазин</div></a></li>
                 <li><a class="root" href="{% url 'home:contact' page='contact' %}"><div class="menu-item">Харылзажыры</div></a></li>
             </ul>
         </nav>

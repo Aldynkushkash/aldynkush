@@ -16,7 +16,8 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 
 from .models import AdvUser, SubRubric, AK, Comment
-from .forms import ChangeUserInfoForm, RegisterUserForm, SearchForm, AKForm, AIFormSet, UserCommentForm, GuestCommentForm
+from .forms import ChangeUserInfoForm, RegisterUserForm, SearchForm, AKForm, AIFormSet, UserCommentForm, \
+    GuestCommentForm
 from .utilities import signer
 
 
@@ -25,12 +26,14 @@ def index(request):
     context = {'aks': aks}
     return render(request, 'home/index.html', context)
 
+
 def about_page(request, page):
     try:
         template = get_template('home/' + page + '.html')
     except TemplateDoesNotExist:
         raise Http404
     return HttpResponse(template.render(request=request))
+
 
 def contact_page(request, page):
     try:
@@ -39,8 +42,10 @@ def contact_page(request, page):
         raise Http404
     return HttpResponse(template.render(request=request))
 
+
 class AKLoginView(LoginView):
     template_name = 'home/login.html'
+
 
 @login_required
 def profile(request):
@@ -48,8 +53,10 @@ def profile(request):
     context = {'aks': aks}
     return render(request, 'home/profile.html', context)
 
+
 class AKLogoutView(LoginRequiredMixin, LogoutView):
     template_name = 'home/logout.html'
+
 
 class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = AdvUser
@@ -67,10 +74,12 @@ class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
             queryset = self.get_queryset()
         return get_object_or_404(queryset, pk=self.user_id)
 
+
 class AKPasswordChangeView(SuccessMessageMixin, LoginRequiredMixin, PasswordChangeView):
     template_name = 'home/password_change.html'
     success_url = reverse_lazy('home:profile')
     success_message = 'Пароль пользователя изменен'
+
 
 class RegisterUserView(CreateView):
     model = AdvUser
@@ -78,8 +87,10 @@ class RegisterUserView(CreateView):
     form_class = RegisterUserForm
     success_url = reverse_lazy('home:register_done')
 
+
 class RegisterDoneView(TemplateView):
     template_name = 'home/register_done.html'
+
 
 def user_activate(request, sign):
     try:
@@ -95,6 +106,7 @@ def user_activate(request, sign):
         user.is_activated = True
         user.save()
     return render(request, template)
+
 
 class DeleteUserView(LoginRequiredMixin, DeleteView):
     model = AdvUser
@@ -115,6 +127,7 @@ class DeleteUserView(LoginRequiredMixin, DeleteView):
             queryset = self.get_queryset()
         return get_object_or_404(queryset, pk=self.user_id)
 
+
 def by_rubric(request, pk):
     rubric = get_object_or_404(SubRubric, pk=pk)
     aks = AK.objects.filter(is_active=True, rubric=pk)
@@ -133,6 +146,7 @@ def by_rubric(request, pk):
     page = paginator.get_page(page_num)
     context = {'rubric': rubric, 'page': page, 'aks': page.object_list, 'form': form}
     return render(request, 'home/by_rubric.html', context)
+
 
 def detail(request, rubric_pk, pk):
     ak = AK.objects.get(pk=pk)
@@ -156,12 +170,14 @@ def detail(request, rubric_pk, pk):
     context = {'ak': ak, 'ais': ais, 'comments': comments, 'form': form}
     return render(request, 'home/detail.html', context)
 
+
 @login_required
 def profile_ak_detail(request, pk):
     ak = get_object_or_404(AK, pk=pk)
     ais = ak.additionalimage_set.all()
     context = {'ak': ak, 'ais': ais}
     return render(request, 'home/profile_ak_detail.html', context)
+
 
 @login_required
 def profile_ak_add(request):
@@ -179,6 +195,7 @@ def profile_ak_add(request):
         formset = AIFormSet()
     context = {'form': form, 'formset': formset}
     return render(request, 'home/profile_ak_add.html', context)
+
 
 @login_required
 def profile_ak_change(request, pk):
@@ -198,6 +215,7 @@ def profile_ak_change(request, pk):
     context = {'form': form, 'formset': formset}
     return render(request, 'home/profile_ak_change.html', context)
 
+
 @login_required
 def profile_ak_delete(request, pk):
     ak = get_object_or_404(AK, pk=pk)
@@ -208,4 +226,3 @@ def profile_ak_delete(request, pk):
     else:
         context = {'ak': ak}
         return render(request, 'home/profile_ak_delete.html', context)
-

@@ -69,7 +69,10 @@ class AdditionalImageInline(admin.TabularInline):
 
 class AKAdmin(admin.ModelAdmin):
     list_display = ('rubric', 'title', 'slug', 'author', 'content', 'publish', 'created', 'status')
+    list_filter = ('status', 'created', 'publish', 'author')
+    search_fields = ('title', 'content')
     fields = (('rubric', 'author'), 'title', 'slug', 'content', 'image', 'is_active')
+    prepopulated_fields = {'slug': ('title',)}
     inlines = (AdditionalImageInline,)
 
 admin.site.register(AK, AKAdmin)

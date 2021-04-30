@@ -1,0 +1,30 @@
+{% extends "basic.html" %}
+
+{% load static %}
+
+{% block title %}Магазин Алдын кушкаш{% endblock %}
+
+{% block content %}
+    <div id="header">
+        <a class="logotip" href="/">Магазин Алдын Кушкаш</a>
+    </div>
+    <div id="subheader">
+        <div class="cart">
+            {% with total_items=cart|length %}
+                {% if total_items > 0 %}
+                    Your cart:
+                    <a href="{% url 'cart:cart_detail' %}">
+                        {{ total_items }} item{{ total_items|pluralize }},
+                        ${{ cart.get_total_price }}
+                    </a>
+                {% else %}
+                    Your cart is empty.
+                {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+    <div id="content">
+        {% block content1 %}
+        {% endblock %}
+    </div>
+{% endblock %}

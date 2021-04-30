@@ -25,9 +25,12 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #ff871c;
+    background-color: #384c7a;
     padding-top: 10px;
-
+    background-image: url("../images/ForAK.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 100%;
 }
 .brand {
     justify-content: space-between;
@@ -48,14 +51,14 @@ body {
     color: #fff;
     font-size: 100px;
     font-weight: 800;
-    text-shadow: 4px 4px 3px gold;
+    text-shadow: -7px -1px 3px gold;
 }
 .header .nav-login {
     align-self: flex-end;
     margin-right: 20px;
 }
 .dropdown-menu {
-    background-color: orangered;
+    background-color: #384c7a;
 }
 
 .nav a {
@@ -63,12 +66,12 @@ body {
     font-weight: bold;
 }
 .nav a:hover {
-    background-color: orangered;
+    background-color: darkgoldenrod;
 }
 .menu {
     justify-content: center;
     align-items: center;
-    background-color: brown;
+    background-color: #384c7a;
     height: 50px;
 }
 .site-menu {
@@ -83,7 +86,7 @@ body {
     height: 100%;
 }
 .site-menu div:hover {
-    background-color: #ff871c;
+    background-color: darkgoldenrod;
     height: 50px;
 }
 .site-menu a {
@@ -116,7 +119,7 @@ img.additional-image {
 
 .sidebar {
 
-    background-color: orangered;
+    background-color: darkgoldenrod;
 }
 .sidebar > span {
     color: blue;
@@ -124,5 +127,5 @@ img.additional-image {
 }
 .footer {
 
-    background-color: #ff871c;
+    background-color: #384c7a;
 }
